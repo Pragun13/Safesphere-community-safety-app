@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SafeSphere - Community Help & Safety</title>
+
+  <!-- Leaflet map CSS (for interactive heatmap map) -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet/dist/leaflet.css"
+  />
+
+  <!-- Main app styles -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- LOGIN SCREEN -->
+  <section class="login-section" id="loginSection">
+    <div class="login-card">
+      <h1>SafeSphere</h1>
+      <p class="login-subtitle">Sign in to access your safety dashboard</p>
+
+      <form id="loginForm" class="login-form">
+        <label>
+          Email
+          <input
+            type="email"
+            id="loginEmail"
+            placeholder="user@rnsit.com / security@rnsit.com / admin@rnsit.com"
+            required
+          />
+        </label>
+
+        <label>
+          Password
+          <input
+            type="password"
+            id="loginPassword"
+            placeholder="safesphere"
+            required
+          />
+        </label>
+
+        <button type="submit" class="btn login-btn">Login</button>
+        <p id="loginError" class="login-error"></p>
+      </form>
+
+      <p class="login-hint">
+        Demo credentials: <br />
+        <strong>Student:</strong> user@rnsit.com<br />
+        <strong>Security:</strong> security@rnsit.com<br />
+        <strong>Admin:</strong> admin@rnsit.com<br />
+        <strong>Password (all):</strong> safesphere
+      </p>
+    </div>
+  </section>
+
+  <!-- MAIN APP (HIDDEN UNTIL LOGIN) -->
+  <header class="top-bar hidden" id="appHeader">
+    <div class="top-bar-inner">
+      <div>
+        <h1 data-i18n="appTitle">SafeSphere</h1>
+        <p data-i18n="appSubtitle">Your community help & safety companion</p>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+        <p id="roleBadge" style="font-size:0.8rem;margin:0;">
+          Role: Guest (Demo)
+        </p>
+        <select id="languageSelect" class="btn-small" style="border-radius:999px;border:1px solid #374151;background:#020617;color:#e5e7eb;">
+          <option value="en">English</option>
+          <option value="hi">Hindi</option>
+          <option value="kn">Kannada</option>
+        </select>
+        <button id="themeToggle" class="btn btn-small theme-btn">
+          Light Mode
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container hidden" id="appContent">
+    <!-- OFFLINE BANNER (PHASE 2) -->
+    <section class="card" id="offlineBanner" style="display:none;">
+      <h2>Offline Mode (Demo)</h2>
+      <p id="offlineText">
+        You are currently offline. SOS via SMS and local report saving still work. Data will sync when online. (Demo)
+      </p>
+    </section>
+
+    <!-- SOS SECTION -->
+    <section class="card sos-card">
+      <h2 data-i18n="sosTitle">Emergency SOS</h2>
+      <p data-i18n="sosDesc">
+        If you feel unsafe, tap the button below to trigger an SOS event.
+      </p>
+
+      <div class="contacts-section">
+        <p class="contacts-title" data-i18n="contactsTitle">
+          Emergency contacts (saved per user)
+        </p>
+
+        <div class="contact-input-row">
+          <input
+            type="text"
+            id="contactName"
+            placeholder="Name (e.g., Dad)"
+          />
+          <input
+            type="text"
+            id="contactPhone"
+            placeholder="+91XXXXXXXXXX"
+          />
+          <button id="addContactBtn" type="button" class="btn btn-small">
+            Add
+          </button>
+        </div>
+
+        <p class="small-note">
+          You can add multiple contacts. They are saved in this browser for this login.
+        </p>
+
+        <div class="contacts-box">
+          <p class="contacts-subtitle">Saved emergency contacts:</p>
+          <ul id="contactsList" class="contacts-list">
+            <li class="contacts-empty">No contacts saved yet.</li>
+          </ul>
+          <button
+            id="clearContactsBtn"
+            type="button"
+            class="btn btn-small btn-outline"
+            style="margin-top: 8px;"
+          >
+            Clear All Contacts
+          </button>
+        </div>
+      </div>
+
+      <button id="sosButton" class="btn btn-sos" data-i18n="sosButton">
+        SEND SOS
+      </button>
+
+      <p id="sosStatus" class="status-text">
+        No SOS triggered yet.
+      </p>
+      <p id="smsStatus" class="status-text sms-text">
+        SMS simulation: no messages sent yet.
+      </p>
+
+      <p style="font-size:0.8rem;color:#9ca3af;margin-top:6px;">
+        Phase 2 Demo: Shake your phone to trigger SOS (Panic Gesture).
+      </p>
+    </section>
+
+    <!-- REPORT ISSUE SECTION -->
+    <section class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+        <div>
+          <h2 style="margin-bottom:4px;" data-i18n="reportTitle">Report an Issue</h2>
+          <p style="margin-top:0;" data-i18n="reportDesc">
+            Help your community by reporting safety or environment issues.
+          </p>
+        </div>
+      </div>
+
+      <form id="reportForm">
+        <label>
+          Category
+          <select id="category">
+            <option value="Harassment">Harassment</option>
+            <option value="Suspicious Activity">Suspicious Activity</option>
+            <option value="Broken Streetlight">Broken Streetlight</option>
+            <option value="Road Hazard">Road Hazard</option>
+            <option value="Other">Other</option>
+          </select>
+        </label>
+
+        <label>
+          Location / Area
+          <input
+            type="text"
+            id="location"
+            placeholder="Example: RNSIT Main Gate, Hostel Road, CSE Block"
+            required
+          />
+        </label>
+
+        <label>
+          Description
+          <textarea
+            id="description"
+            rows="3"
+            placeholder="Describe what happened..."
+            required
+          ></textarea>
+        </label>
+
+        <label class="checkbox-row">
+          <input type="checkbox" id="anonymous" />
+          Submit anonymously
+        </label>
+
+        <button type="submit" class="btn">Submit Report</button>
+      </form>
+    </section>
+
+    <!-- FEED SECTION -->
+    <section class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+        <h2 style="margin-bottom:4px;" data-i18n="recentReportsTitle">
+          Recent Community Reports
+        </h2>
+        <button
+          id="clearReportsBtn"
+          type="button"
+          class="btn btn-small btn-outline"
+        >
+          Clear All Reports
+        </button>
+      </div>
+
+      <p id="noReportsText">No reports yet. Be the first to report an issue.</p>
+      <div id="reportsList"></div>
+    </section>
+
+    <!-- AI SAFETY INSIGHTS SECTION (ADVANCED) -->
+    <section class="card ai-card">
+      <h2>AI Safety Insights (Phase 2 Demo)</h2>
+      <p class="ai-subtext">
+        These insights are generated using simple pattern analysis on recent
+        reports. In a full version, this can be replaced with real AI models.
+      </p>
+
+      <div class="ai-insights">
+        <p>
+          <span class="insight-label">Overall activity:</span>
+          <span id="insightCount" class="insight-text">
+            Not enough data yet.
+          </span>
+        </p>
+
+        <p>
+          <span class="insight-label">Most common issue type:</span>
+          <span id="insightCategory" class="insight-text">
+            Not enough data yet.
+          </span>
+        </p>
+
+        <p>
+          <span class="insight-label">Most reported area:</span>
+          <span id="insightArea" class="insight-text">
+            Not enough data yet.
+          </span>
+        </p>
+
+        <p>
+          <span class="insight-label">Estimated risk level:</span>
+          <span id="insightRisk" class="insight-text">
+            Low (waiting for more reports)
+          </span>
+        </p>
+
+        <p>
+          <span class="insight-label">Geo-fence coverage:</span>
+          <span id="insightGeofence" class="insight-text">
+            Critical zones not triggered yet.
+          </span>
+        </p>
+
+        <p>
+          <span class="insight-label">Trend & SafeScore:</span>
+          <span id="insightTrend" class="insight-text">
+            Not enough data to calculate trend.
+          </span>
+        </p>
+      </div>
+    </section>
+
+    <!-- HEATMAP SECTION -->
+    <section class="card heatmap-card">
+      <h2>Safety Heatmap (Demo)</h2>
+      <p class="ai-subtext">
+        Locations with more reports appear with stronger bars. This helps
+        authorities quickly see emerging hotspots.
+      </p>
+      <div id="heatmapList" class="heatmap-list">
+        <p class="placeholder-text">Not enough data yet to build a heatmap.</p>
+      </div>
+    </section>
+
+    <!-- MAP SECTION WITH INTERACTIVE HEAT ZONES -->
+    <section class="card map-card">
+      <h2>Safety Map & Nearby Area</h2>
+      <p>
+        This interactive map shows your campus and highlights high-risk zones
+        based on community reports. The quick-access buttons below open Google
+        Maps to find nearby emergency services.
+      </p>
+
+      <div class="map-controls">
+        <button id="btnHospitals" class="btn btn-small">Nearby Hospitals</button>
+        <button id="btnPolice" class="btn btn-small">Nearby Police Stations</button>
+        <button id="btnMedical" class="btn btn-small">Nearby Medical Shops</button>
+      </div>
+
+      <div class="map-wrapper">
+        <div id="liveMap"></div>
+      </div>
+
+      <div class="location-actions">
+        <button id="btnMyLocation" class="btn btn-outline">
+          Use My Live Location
+        </button>
+        <p id="locationStatus" class="location-status">
+          Real-time location not enabled yet.
+        </p>
+      </div>
+    </section>
+
+    <!-- VOLUNTEER & HELPER NETWORK (PHASE 2) -->
+    <section class="card" id="volunteerCard">
+      <h2>Volunteer & Helper Network (Demo)</h2>
+      <p class="ai-subtext">
+        Students or staff can enroll as volunteers (first aid, support, escorts).
+        Admins can see this list in their panel.
+      </p>
+
+      <div class="contact-input-row">
+        <input type="text" id="volunteerName" placeholder="Your Name" />
+        <select id="volunteerRole">
+          <option value="General">General Volunteer</option>
+          <option value="FirstAid">First Aid</option>
+          <option value="Security">Security Support</option>
+          <option value="Counsellor">Counsellor / Listener</option>
+        </select>
+        <button id="addVolunteerBtn" type="button" class="btn btn-small">
+          Join Network
+        </button>
+      </div>
+
+      <p class="small-note">
+        Demo: Stored locally in this browser. In full version this would sync to a central server.
+      </p>
+
+      <ul id="volunteerList" class="contacts-list">
+        <li class="contacts-empty">No volunteers enrolled yet.</li>
+      </ul>
+    </section>
+
+    <!-- CAMPUS-WIDE ANALYTICS (PHASE 2) -->
+    <section class="card report-card">
+      <h2>Campus-Wide Safety Analytics (Demo)</h2>
+      <p id="analyticsSummary">
+        Not enough data yet. Submit a few reports to see analytics.
+      </p>
+      <p id="analyticsScore" class="status-text" style="color:#a5b4fc;">
+        SafeScore: N/A
+      </p>
+    </section>
+
+    <!-- ADMIN & SECURITY PANEL (PHASE 2) -->
+    <section class="card" id="adminPanel" style="display:none;">
+      <h2>Admin & Security Panel (Phase 2 Demo)</h2>
+      <p class="ai-subtext">
+        Visible only for security@rnsit.com and admin@rnsit.com logins.
+      </p>
+
+      <h3 style="font-size:1rem;margin-bottom:4px;">Incoming SOS Alerts (Local Demo)</h3>
+      <ul id="alertsList" class="contacts-list">
+        <li class="contacts-empty">No SOS alerts yet.</li>
+      </ul>
+
+      <h3 style="font-size:1rem;margin-top:10px;margin-bottom:4px;">Volunteer Network Snapshot</h3>
+      <ul id="adminVolunteerList" class="contacts-list">
+        <li class="contacts-empty">No volunteers enrolled yet.</li>
+      </ul>
+    </section>
+
+    <!-- PDF EXPORT SECTION -->
+    <section class="card report-card">
+      <h2>Export Safety Report</h2>
+      <p>
+        Download a summary of recent reports and AI insights as a PDF. This can
+        be shared with authorities or used for documentation.
+      </p>
+      <button id="downloadPdfBtn" class="btn">Download Report (PDF)</button>
+      <p class="small-note">
+        Generated locally in your browser using the jsPDF library (demo).
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer hidden" id="appFooter">
+    <p>Prototype for Community Help & Safety App | Built for CODE FORGE</p>
+  </footer>
+
+  <!-- PDF library from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <!-- Leaflet JS for interactive map -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <!-- Main logic -->
+  <script src="script.js"></script>
+</body>
+</html>

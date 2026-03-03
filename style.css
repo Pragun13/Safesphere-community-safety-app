@@ -1,0 +1,518 @@
+/* General Page Styles */
+* {
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #020617;
+  color: #e5e7eb;
+}
+
+/* Utility */
+.hidden {
+  display: none;
+}
+
+/* LOGIN PAGE */
+.login-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: radial-gradient(circle at top, #1f2937, #020617 65%);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  background: #020617;
+  border-radius: 18px;
+  padding: 24px 22px 20px;
+  border: 1px solid #1f2937;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.login-card h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  text-align: center;
+}
+
+.login-subtitle {
+  margin-top: 4px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #9ca3af;
+}
+
+.login-form {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.login-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  gap: 4px;
+}
+
+.login-form input {
+  background: #020617;
+  border-radius: 10px;
+  border: 1px solid #374151;
+  padding: 8px 10px;
+  font-size: 0.9rem;
+  color: #f3f4f6;
+}
+
+.login-form input:focus {
+  outline: none;
+  border-color: #22c55e;
+}
+
+.login-btn {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.login-error {
+  margin-top: 4px;
+  font-size: 0.8rem;
+  color: #f87171;
+  min-height: 14px;
+}
+
+.login-hint {
+  margin-top: 12px;
+  font-size: 0.8rem;
+  text-align: center;
+  color: #a5b4fc;
+}
+
+/* Header */
+.top-bar {
+  background: #020617;
+  padding: 12px 24px;
+  border-bottom: 1px solid #1f2937;
+}
+
+.top-bar-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.top-bar h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.top-bar p {
+  margin: 4px 0 0;
+  font-size: 0.95rem;
+  color: #9ca3af;
+}
+
+/* Main Layout */
+.container {
+  max-width: 1100px;
+  margin: 24px auto;
+  padding: 0 16px 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+/* Cards */
+.card {
+  background: #020617;
+  border-radius: 16px;
+  padding: 18px 20px;
+  border: 1px solid #1f2937;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.card h2 {
+  margin-top: 0;
+  font-size: 1.3rem;
+}
+
+.card p {
+  font-size: 0.95rem;
+  color: #d1d5db;
+}
+
+/* SOS Card */
+.sos-card {
+  border: 1px solid #ef4444;
+}
+
+.contacts-section {
+  margin-bottom: 8px;
+}
+
+.contacts-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.contact-input-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.contact-input-row input {
+  flex: 1;
+  min-width: 120px;
+}
+
+.contacts-box {
+  margin-top: 10px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  border: 1px solid #1f2937;
+  background: #020617;
+}
+
+.contacts-subtitle {
+  font-size: 0.85rem;
+  margin: 0 0 4px;
+  color: #9ca3af;
+}
+
+.contacts-list {
+  list-style: none;
+  padding-left: 14px;
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.contacts-list li {
+  margin: 2px 0;
+}
+
+.contacts-empty {
+  color: #6b7280;
+}
+
+/* AI Card */
+.ai-card {
+  border: 1px solid #22c55e;
+}
+
+.ai-subtext {
+  font-size: 0.85rem;
+  color: #9ca3af;
+  margin-bottom: 10px;
+}
+
+.ai-insights p {
+  margin: 6px 0;
+}
+
+.insight-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.insight-text {
+  font-size: 0.9rem;
+  margin-left: 4px;
+}
+
+/* HEATMAP Card */
+.heatmap-card {
+  border: 1px solid #f97316;
+}
+
+.heatmap-list {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.heatmap-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.heatmap-label {
+  font-size: 0.85rem;
+  color: #f9fafb;
+}
+
+.heatmap-bar-outer {
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  background: #111827;
+  overflow: hidden;
+}
+
+.heatmap-bar-inner {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(to right, #f97316, #facc15);
+}
+
+.placeholder-text {
+  font-size: 0.85rem;
+  color: #9ca3af;
+}
+
+/* MAP Card */
+.map-card {
+  border: 1px solid #3b82f6;
+}
+
+.map-controls {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.map-wrapper {
+  margin-top: 10px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid #1d4ed8;
+}
+
+.map-wrapper #liveMap {
+  width: 100%;
+  height: 280px;
+  border: 0;
+}
+
+.location-actions {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.location-status {
+  font-size: 0.85rem;
+  color: #e5e7eb;
+}
+
+/* PDF Card */
+.report-card {
+  border: 1px solid #a855f7;
+}
+
+.small-note {
+  font-size: 0.8rem;
+  color: #a5b4fc;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  background: #22c55e;
+  color: #022c22;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease,
+    color 0.1s ease, border-color 0.1s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.btn-sos {
+  background: #ef4444;
+  color: #fee2e2;
+}
+
+/* Smaller button */
+.btn-small {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  margin-top: 0;
+}
+
+.theme-btn {
+  margin-top: 0;
+}
+
+/* Outline button */
+.btn-outline {
+  background: transparent;
+  color: #bfdbfe;
+  border: 1px solid #60a5fa;
+}
+
+/* Form */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  gap: 4px;
+}
+
+input[type="text"],
+select,
+textarea {
+  background: #020617;
+  border-radius: 10px;
+  border: 1px solid #374151;
+  padding: 8px 10px;
+  font-size: 0.9rem;
+  color: #f3f4f6;
+}
+
+input[type="text"]:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #22c55e;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.checkbox-row {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Status Text */
+.status-text {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: #facc15;
+}
+
+.sms-text {
+  color: #93c5fd;
+  font-size: 0.85rem;
+}
+
+/* Reports List */
+#reportsList {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.report-card-item {
+  background: #020617;
+  border-radius: 12px;
+  border: 1px solid #374151;
+  padding: 10px 12px;
+}
+
+.report-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+  color: #9ca3af;
+}
+
+.report-category {
+  font-weight: 600;
+  color: #22c55e;
+}
+
+.report-body {
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 10px 0 16px;
+  font-size: 0.8rem;
+  color: #6b7280;
+  border-top: 1px solid #111827;
+}
+
+/* ========== LIGHT MODE ========= */
+
+body.light-mode {
+  background: #f3f4f6;
+  color: #020617;
+}
+
+body.light-mode .login-section {
+  background: radial-gradient(circle at top, #e5e7eb, #cbd5f5 70%);
+}
+
+body.light-mode .login-card {
+  background: #ffffff;
+  border-color: #e5e7eb;
+}
+
+body.light-mode .login-form input {
+  background: #ffffff;
+  color: #020617;
+  border-color: #d1d5db;
+}
+
+body.light-mode .top-bar {
+  background: #ffffff;
+  border-bottom-color: #e5e7eb;
+}
+
+body.light-mode .card {
+  background: #ffffff;
+  border-color: #e5e7eb;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+}
+
+body.light-mode .card p {
+  color: #111827;
+}
+
+body.light-mode .map-wrapper {
+  border-color: #93c5fd;
+}
+
+body.light-mode .heatmap-bar-outer {
+  background: #e5e7eb;
+}
+
+body.light-mode .footer {
+  border-top-color: #e5e7eb;
+  color: #4b5563;
+}  
